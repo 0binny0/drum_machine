@@ -7,4 +7,10 @@ function Screen({pad, sound_bank, volume}) {
     </section>
 }
 
-export {Screen};
+function Pad({id, src, style}) {
+    return <button id={id} className="pad" style={style}>
+        <audio src={src}></audio>
+    </button>
+}
+
+export {Screen, Pad};

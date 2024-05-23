@@ -1,10 +1,8 @@
 
-import {Screen} from "../components.jsx";
+import {Screen, Pad} from "../components.jsx";
 
 import {test, expect} from "vitest";
 import {render, screen} from "@testing-library/react";
-
-
 
 test(`Verify that the drum machine screen displays the current volume,
     name of the sound generated, and the sound bank the sound is stored under`, () => {
@@ -16,3 +14,12 @@ test(`Verify that the drum machine screen displays the current volume,
         })
     }
 );
+
+test("Verify that a pad contains a button to trigger a sound", () => {
+    const {getByRole} = render(
+        <Pad id="pad_purple" style={{background: "rgba(100, 0, 255, 40%)", boxShadow: "inset 0px 0px 5px 0px purple"}}/>
+    );
+    const pad = getByRole("button");
+    expect(pad).toBeInTheDocument();
+    expect(pad).toHaveClass("pad");
+});
