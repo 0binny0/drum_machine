@@ -19,7 +19,7 @@ function Pad({id, src, style, onMouseDown}) {
     </button>
 }
 
-function Pads({sound_bank, highlight, activeHighlight}) {
+function Pads({padHit, sound_bank, highlight, activeHighlight}) {
 
     const power_on = useContext(PowerContext);
     let loop = useRef(null);
@@ -49,9 +49,12 @@ function Pads({sound_bank, highlight, activeHighlight}) {
                 (pad) => pad.id === e.currentTarget.id
             );
             counter_ref.current = pad_index;
-            const audio_clip = pads_ref.current.children[pad_index].firstElementChild;
-            const audio = new Audio(audio_clip.src);
-            setTimeout(() => audio.play(), 400);
+            const pad = pads_ref.current.children[pad_index];
+            const audio = new Audio(pad.firstElementChild.src);
+            setTimeout(() => {
+                padHit(pad.id.slice(4).replaceAll("_", " "));
+                audio.play()
+            }, 400);
             //Math.random() is used to re-render with a new setTimeout loop
             setNextLoop(Math.random());
         }
