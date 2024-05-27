@@ -37,7 +37,7 @@ function Pads({sound_bank, highlight, activeHighlight}) {
                 if (counter_ref.current > 8) {
                     counter_ref.current = 0;
                 }
-            }, 800);
+            }, 400);
             return () => clearTimeout(loop.current);
         }
     }, [power_on, highlight, nextLoop]);
@@ -48,6 +48,9 @@ function Pads({sound_bank, highlight, activeHighlight}) {
             (pad) => pad.id === e.currentTarget.id
         );
         counter_ref.current = pad_index;
+        const audio_clip = pads_ref.current.children[pad_index].firstElementChild;
+        const audio = new Audio(audio_clip.src);
+        setTimeout(() => audio.play(), 400);
         //Math.random() is used to re-render with a new setTimeout loop
         setNextLoop(Math.random());
     }
