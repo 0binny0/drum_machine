@@ -74,4 +74,14 @@ function Pads({padHit, sound_bank, highlight, activeHighlight}) {
     return <div ref={pads_ref} id="pad_interface" className="pads_wrapper">{pads}</div>
 }
 
-export {Screen, Pad, Pads};
+function ButtonControls({changeSoundBank, changeVolume}) {
+    return <div id="controls">
+        <div className="volume_controls">
+            <button type="button" onMouseDown={changeVolume} className="volume_button" aria-label="increase_volume" id="volume_up"><svg></svg></button>
+            <button type="button" onMouseDown={changeVolume} className="volume_button" aria-label="decrease_volume" id="volume_down"><svg></svg></button>
+        </div>
+        <button onClick={changeSoundBank} type="button" aria-label='change_sound_bank'>Sound Bank</button>
+    </div>
+}
+
+export {Screen, Pad, Pads, ButtonControls};
