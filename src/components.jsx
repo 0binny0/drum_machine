@@ -37,19 +37,24 @@ function Pads({sound_bank, highlight, activeHighlight}) {
                 if (counter_ref.current > 8) {
                     counter_ref.current = 0;
                 }
-            }, 800);
+            }, 400);
             return () => clearTimeout(loop.current);
         }
     }, [power_on, highlight, nextLoop]);
 
     function handle_stop_loop(e) {
-        clearTimeout(loop.current);
-        let pad_index = [...pads_ref.current.children].findIndex(
-            (pad) => pad.id === e.currentTarget.id
-        );
-        counter_ref.current = pad_index;
-        //Math.random() is used to re-render with a new setTimeout loop
-        setNextLoop(Math.random());
+        if (power_on) {
+            clearTimeout(loop.current);
+            let pad_index = [...pads_ref.current.children].findIndex(
+                (pad) => pad.id === e.currentTarget.id
+            );
+            counter_ref.current = pad_index;
+            const audio_clip = pads_ref.current.children[pad_index].firstElementChild;
+            const audio = new Audio(audio_clip.src);
+            setTimeout(() => audio.play(), 400);
+            //Math.random() is used to re-render with a new setTimeout loop
+            setNextLoop(Math.random());
+        }
     }
 
     //mp3 files are selected based on what sound bank a user chooses
