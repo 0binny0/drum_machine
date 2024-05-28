@@ -41,15 +41,20 @@ p:nth-of-type(1) {
     margin-top: 0;
 }
 
+p:nth-of-type(3) {
+    margin-bottom: 0;
+}
+
 .display {
     /*border: 1px solid black;*/
-    height: 134px;
+    height: 113px;
     box-shadow: inset 0px 0px 5px 1px;
 }
 
 .volume_controls {
     width: 151px;
     margin: 10px 0 0;
+    border: none;
 }
 
 .volume_label {
@@ -63,17 +68,22 @@ p:nth-of-type(1) {
     align-items: end;
 }
 
+.button_shadow {
+    box-shadow: inset 0px 0px 2px 0px black;
+}
+
 .slate {
     background: slategrey;
-    border-color: darkgrey;
+    border: none;
 }
 
 .ctrl_button {
     background: slategrey;
-    box-shadow: 0px 0px 0px 0px;
+    box-shadow: inset 0px 0px 2px 0px black;
+    padding: 10px;
     height: 45px;
     color: darkgrey;
-    border-color: darkgrey;
+    border: none;
 }
 
 .pad {
@@ -90,6 +100,13 @@ p:nth-of-type(1) {
 .pad:nth-of-type(8),
 .pad:nth-of-type(9) {
     margin-top: 0;
+}
+
+.pads_wrapper {
+    margin-top: 10px;
+    padding: 5px;
+    border: 1px solid black;
+    box-shadow: inset 0px 0px 2px 0px;
 }
 
 svg {

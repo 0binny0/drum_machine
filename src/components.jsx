@@ -80,20 +80,20 @@ function ButtonControls({changeSoundBank, changeVolume, switchPower}) {
     return <div id="controls">
         <div className="volume_controls">
             <p className="volume_label">Volume</p>
-            <button className="slate" type="button" onMouseDown={power_on ? changeVolume : null} aria-label="increase_volume" id="volume_up">
+            <button className="slate button_shadow" type="button" onMouseDown={power_on ? changeVolume : null} aria-label="increase_volume" id="volume_up">
                 <svg className="slate" viewBox="0 0 60 30">
                     <line x1="15" y1="25" x2="30" y2="10" stroke="darkgrey"/>
                     <line x1="30" y1="10" x2="45" y2="25" stroke="darkgrey"/>
                 </svg>
             </button>
-            <button className="slate" type="button" onMouseDown={power_on ? changeVolume : null} aria-label="decrease_volume" id="volume_down">
+            <button className="slate button_shadow" type="button" onMouseDown={power_on ? changeVolume : null} aria-label="decrease_volume" id="volume_down">
                  <svg className="slate" viewBox="0 0 60 30">
                     <line x1="15" y1="10" x2="30" y2="25" stroke="darkgrey"/>
                     <line x1="30" y1="25" x2="45" y2="10" stroke="darkgrey"/>
                 </svg>
             </button>
         </div>
-        <button className="ctrl_button" onClick={power_on ? changeSoundBank : null} type="button" aria-label='change_sound_bank'>Sound Bank</button>
+        <button className="ctrl_button button_shadow" onClick={power_on ? changeSoundBank : null} type="button" aria-label='change_sound_bank'>Sound Bank</button>
         <button onClick={switchPower} className="ctrl_button">Power</button>
     </div>
 }
