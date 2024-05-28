@@ -63,6 +63,8 @@ p:nth-of-type(3) {
 .volume_label {
     text-align: center;
     color: slategrey;
+    font-family: "Titillium Web", serif;
+    font-weight: 300;
 }
 
 #controls {
@@ -87,6 +89,8 @@ p:nth-of-type(3) {
     height: 45px;
     color: darkgrey;
     border: none;
+    font-family: "Titillium Web", serif;
+    font-weight: 300;
 }
 
 .pad {
