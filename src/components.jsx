@@ -6,10 +6,9 @@ import {useContext, useEffect, useRef, useState} from "react";
 
 
 function Screen({pad, sound_bank, volume}) {
-    return <section className="display" aria-label="drum_machine_info">
-        <p>Pad: {pad}</p>
-        <p>Sound Bank: {sound_bank}</p>
-        <p>Volume: {volume}</p>
+    const power_on = useContext(PowerContext);
+    return <section className={power_on ? "display highlight show_info": "display highlight_off"} aria-label="drum_machine_info">
+        <p>Pad: {pad}</p><p>Sound Bank: {sound_bank}</p><p>Volume: {volume}</p>
     </section>
 }
 
@@ -37,7 +36,7 @@ function Pads({padHit, sound_bank, highlight, activeHighlight}) {
                 if (counter_ref.current > 8) {
                     counter_ref.current = 0;
                 }
-            }, 400);
+            }, 3000);
             return () => clearTimeout(loop.current);
         }
     }, [power_on, highlight, nextLoop]);
@@ -61,27 +60,76 @@ function Pads({padHit, sound_bank, highlight, activeHighlight}) {
     }
 
     //mp3 files are selected based on what sound bank a user chooses
+    // const colors = ["cyan", "snow", "magenta", "lightcyan"];
+    const colors = ["magenta", "yellow", "orange"];
     const mp3s = sound_bank === "A" ? mp3_files[0]: mp3_files[1];
     const pads = mp3s.map((mp3_file, i) => {
         return <Pad onMouseDown={handle_stop_loop} key={crypto.randomUUID()} id={mp3_file.id} src={mp3_file.src} style={
             {
-                background: power_on ? mp3_file.style.background : "rgba(0, 0, 0, 0.1)",
+                background: power_on ? colors[Math.floor(Math.random() * colors.length)] : "rgba(0, 0, 0, 0.1)",
                 boxShadow: power_on ? mp3_file.style.boxShadow : "inset 0 0 7px 0 rgba(0, 0, 0, 0.6)",
-                opacity: power_on && highlight !== mp3_file.id ? mp3_file.style.opacity : "0.9"
+                opacity: power_on && highlight !== mp3_file.id ? mp3_file.style.opacity : "1"
             }
         } />
     });
     return <div ref={pads_ref} id="pad_interface" className="pads_wrapper">{pads}</div>
 }
 
-function ButtonControls({changeSoundBank, changeVolume}) {
+function ButtonControls({changeSoundBank, changeVolume, switchPower}) {
+    const power_on = useContext(PowerContext);
     return <div id="controls">
         <div className="volume_controls">
-            <button type="button" onMouseDown={changeVolume} className="volume_button" aria-label="increase_volume" id="volume_up"><svg></svg></button>
-            <button type="button" onMouseDown={changeVolume} className="volume_button" aria-label="decrease_volume" id="volume_down"><svg></svg></button>
+            <p className="volume_label">Volume</p>
+            <button className="slate" type="button" onMouseDown={power_on ? changeVolume : null} aria-label="increase_volume" id="volume_up">
+                <svg className="slate" viewBox="0 0 60 30">
+                    <line x1="15" y1="25" x2="30" y2="10" stroke="darkgrey"/>
+                    <line x1="30" y1="10" x2="45" y2="25" stroke="darkgrey"/>
+                </svg>
+            </button>
+            <button className="slate" type="button" onMouseDown={power_on ? changeVolume : null} aria-label="decrease_volume" id="volume_down">
+                 <svg className="slate" viewBox="0 0 60 30">
+                    <line x1="15" y1="10" x2="30" y2="25" stroke="darkgrey"/>
+                    <line x1="30" y1="25" x2="45" y2="10" stroke="darkgrey"/>
+                </svg>
+            </button>
         </div>
-        <button onClick={changeSoundBank} type="button" aria-label='change_sound_bank'>Sound Bank</button>
+        <button className="ctrl_button" onClick={power_on ? changeSoundBank : null} type="button" aria-label='change_sound_bank'>Sound Bank</button>
+        <button onClick={switchPower} className="ctrl_button">Power</button>
     </div>
 }
 
-export {Screen, Pad, Pads, ButtonControls};
+function DrumMachine({props}) {
+    // const power_on = useContext(PowerContext);
+    const [machineStatus, setMachineStatus] = useState(true);
+    const [soundBank, setSoundBank] = useState("A");
+    const [highlight, setHighlight] = useState("");
+    const [padName, setPadName] = useState("");
+
+    function handleSoundBankChange() {
+        if (soundBank === "A") {
+            setSoundBank("B");
+        } else if (soundBank === "B") {
+            setSoundBank("A");
+        }
+    }
+
+    function handleMachineSwitch() {
+        if (machineStatus) {
+            setMachineStatus(false);
+        } else {
+            setMachineStatus(true);
+        }
+    }
+
+    return <>
+        <PowerContext.Provider value={machineStatus}>
+            <div className={machineStatus ? "drum_machine_wrapper power": "drum_machine_wrapper"}>
+                <Screen pad={padName} sound_bank={soundBank}/>
+                <Pads padHit={setPadName} sound_bank={soundBank} highlight={highlight} activeHighlight={setHighlight}/>
+                <ButtonControls changeSoundBank={handleSoundBankChange} switchPower={handleMachineSwitch}/>
+            </div>
+        </PowerContext.Provider>
+    </>
+}
+
+export {Screen, Pad, Pads, ButtonControls, DrumMachine};
