@@ -10,8 +10,11 @@ body {
 .drum_machine_wrapper {
      /*background: hsl(0, 0%, 60%);*/
     /*background: grey;*/
-    background: slategrey;
+    background: hsl(235, 20%, 25%);
     padding: 10px;
+    width: 90%;
+    margin: 50px auto;
+    border: 3px solid;
 }
 
 .power {
@@ -59,7 +62,7 @@ p:nth-of-type(3) {
 
 .volume_label {
     text-align: center;
-    color: darkgrey;
+    color: slategrey;
 }
 
 #controls {
@@ -73,12 +76,12 @@ p:nth-of-type(3) {
 }
 
 .slate {
-    background: slategrey;
+    background: hsl(235, 20%, 25%);
     border: none;
 }
 
 .ctrl_button {
-    background: slategrey;
+    background: hsl(235, 20%, 25%);
     box-shadow: inset 0px 0px 2px 0px black;
     padding: 10px;
     height: 45px;
