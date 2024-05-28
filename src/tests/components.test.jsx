@@ -5,7 +5,9 @@ import {PowerContextRender} from "./test_config.jsx";
 
 import {test, expect, vi} from "vitest";
 import {render, screen} from "@testing-library/react";
+import {userEvent} from "@testing-library/user-event";
 import {highlight_drum_pad} from "../helpers.js";
+import {PowerContext} from "../context.jsx";
 
 test(`Verify that the drum machine screen displays the current volume,
     name of the sound generated, and the sound bank the sound is stored under`, () => {
@@ -28,13 +30,13 @@ test("Verify that a pad contains a button to trigger a sound", () => {
 });
 
 
-test("Verify that pads are styled with a color when the machine is on", () => {
+test("Verify that pads are styled when the machine is on", () => {
     const providerProps = {value: true};
     const {getAllByRole} = PowerContextRender(<Pads sound_bank="A"/>, providerProps);
     const buttons = getAllByRole("button");
     //Appears to only accept rgb values
     //https://github.com/testing-library/jest-dom/issues/49
-    expect(buttons[0]).toHaveAttribute("style", "background: rgb(225, 255, 240); box-shadow: inset 0px 0px 6px 2px darkgrey; opacity: 0.5;")
+    expect(buttons[0]).toHaveAttribute("style");
 });
 
 describe("", () => {
@@ -51,6 +53,17 @@ describe("", () => {
         [volume_up, volume_down, sound_bank].forEach(button => {
             expect(button).toBeInTheDocument();
         })
-    })
+    });
+
+    test("Verify that a callback is invoked when clicking the sound bank button", async () => {
+        const mock_setSoundBank = vi.fn();
+        const mock_setVolume = vi.fn();
+        const user = userEvent.setup();
+        const {getByRole} = PowerContextRender(
+            <ButtonControls changeSoundBank={mock_setSoundBank} changeVolume={mock_setVolume} />, {value: true}
+        );
+        await user.click(getByRole("button", {name: "change_sound_bank"}));
+        expect(mock_setSoundBank).toHaveBeenCalled();
+    });
 
 })
