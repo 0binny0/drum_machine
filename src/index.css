@@ -1,0 +1,98 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: hsl(235, 20%, 25%);
+}
+
+.drum_machine_wrapper {
+     /*background: hsl(0, 0%, 60%);*/
+    /*background: grey;*/
+    background: slategrey;
+    padding: 10px;
+}
+
+.power {
+    box-shadow: 0px 1px 15px 0px ghostwhite;
+}
+
+.highlight_off {
+    background: darkgrey;
+}
+
+.highlight_off > p {
+    visibility: hidden;
+}
+
+.show_info {
+    background: aliceblue;
+    font-family: "Teko", sans-serif;
+    font-size: 24px;
+}
+
+.show_info > p {
+    margin: 0;
+    padding: 5px 10px;
+}
+
+p:nth-of-type(1) {
+    margin-top: 0;
+}
+
+.display {
+    /*border: 1px solid black;*/
+    height: 134px;
+    box-shadow: inset 0px 0px 5px 1px;
+}
+
+.volume_controls {
+    width: 151px;
+    margin: 10px 0 0;
+}
+
+.volume_label {
+    text-align: center;
+    color: darkgrey;
+}
+
+#controls {
+    display: flex;
+    justify-content: space-around;
+    align-items: end;
+}
+
+.slate {
+    background: slategrey;
+    border-color: darkgrey;
+}
+
+.ctrl_button {
+    background: slategrey;
+    box-shadow: 0px 0px 0px 0px;
+    height: 45px;
+    color: darkgrey;
+    border-color: darkgrey;
+}
+
+.pad {
+    width: 100px;
+    height: 100px;
+    border: 1px solid grey;
+    margin: 1px;
+}
+
+.pad:nth-of-type(4),
+.pad:nth-of-type(5),
+.pad:nth-of-type(6),
+.pad:nth-of-type(7),
+.pad:nth-of-type(8),
+.pad:nth-of-type(9) {
+    margin-top: 0;
+}
+
+svg {
+  width: 60px;
+  height: 35px;
+}

@@ -1,7 +1,7 @@
 
 const style = {
-        background: "rgb(225, 255, 240)",
-        opacity: "0.5",
+        background: "rgb(245, 245, 255)",
+        opacity: "0.92",
         boxShadow: "inset 0px 0px 6px 2px darkgrey"
 };
 
