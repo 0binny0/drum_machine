@@ -12,8 +12,8 @@ function Screen({pad, sound_bank, volume}) {
     </section>
 }
 
-function Pad({id, src, style, onMouseDown}) {
-    return <button onMouseDown={onMouseDown} id={id} className="pad" style={style}>
+function Pad({id, src, style, onClick}) {
+    return <button onClick={onClick} id={id} className="pad" style={style}>
         <audio src={src}></audio>
     </button>
 }
@@ -23,8 +23,6 @@ const Pads = forwardRef(
         const power_on = useContext(PowerContext);
         let loop = useRef(null);
         let counter_ref = useRef(0);
-        //nextLoop is trigger a new loop upon a user mouse event
-        let [nextLoop, setNextLoop] = useState(0);
 
         useEffect(() => {
             // loops through the pads to highlight each pad for 1 second when the drum machine is on
@@ -38,14 +36,30 @@ const Pads = forwardRef(
                 }, 2250);
             return () => clearTimeout(loop.current);
             }
-        }, [power_on, props.highlight, nextLoop]);
+        }, [power_on, props.highlight]);
+
+        function handleAudio(e) {
+            if (power_on) {
+                clearTimeout(loop.current);
+                let pad_index = [...ref.current.children].findIndex(
+                    (pad) => pad.id === e.currentTarget.id
+                );
+                counter_ref.current = pad_index;
+                const pad = ref.current.children[pad_index];
+                const audio = new Audio(pad.firstElementChild.src);
+                audio.volume = parseFloat(props.volume / 10);
+                props.padHit(pad.id.slice(4).replaceAll("_", " "));
+                audio.play()
+                //Math.random() is used to re-render with a new setTimeout loop
+            }
+        }
 
         //mp3 files are selected based on what sound bank a user chooses
         // const colors = ["cyan", "snow", "magenta", "lightcyan"];
         const colors = ["magenta", "yellow", "orange"];
         const mp3s = props.sound_bank === "A" ? mp3_files[0]: mp3_files[1];
         const pads = mp3s.map((mp3_file, i) => {
-            return <Pad key={crypto.randomUUID()} id={mp3_file.id} src={mp3_file.src} style={
+            return <Pad onClick={handleAudio} key={crypto.randomUUID()} id={mp3_file.id} src={mp3_file.src} style={
                 {
                     background: power_on ? colors[Math.floor(Math.random() * colors.length)] : "rgba(0, 0, 0, 0.1)",
                     boxShadow: power_on ? mp3_file.style.boxShadow : "inset 0 0 7px 0 rgba(0, 0, 0, 0.6)",
