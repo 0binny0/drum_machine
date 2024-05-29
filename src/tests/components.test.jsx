@@ -1,13 +1,11 @@
 
-import {Screen, Pad, Pads, ButtonControls} from "../components.jsx";
-import {mp3_files} from "../sound_files.js";
+import {Screen, Pad, Pads, ButtonControls, DrumMachine} from "../components.jsx";
 import {PowerContextRender} from "./test_config.jsx";
 
-import {test, expect, vi} from "vitest";
+import {test, expect, vi, beforeEach, afterEach, describe} from "vitest";
+import {fireEvent} from "@testing-library/dom";
 import {render, screen} from "@testing-library/react";
 import {userEvent} from "@testing-library/user-event";
-import {highlight_drum_pad} from "../helpers.js";
-import {PowerContext} from "../context.jsx";
 
 test(`Verify that the drum machine screen displays the current volume,
     name of the sound generated, and the sound bank the sound is stored under`, () => {
@@ -65,5 +63,15 @@ describe("", () => {
         await user.click(getByRole("button", {name: "change_sound_bank"}));
         expect(mock_setSoundBank).toHaveBeenCalled();
     });
+
+    test("Verify that the volume will be increased by 1 when clicking the increase volume button", async () => {
+        const user = userEvent.setup();
+        const {getByRole, getAllByRole} = render(<DrumMachine />);
+        await user.click(getByRole("button", {name: "increase_volume"}));
+        const volume_level = getAllByRole("paragraph")[2];
+        expect(volume_level).toHaveTextContent("Volume: 6");
+    });
+
+
 
 })
