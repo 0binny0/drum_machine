@@ -35,36 +35,17 @@ const Pads = forwardRef(
                     if (counter_ref.current > 8) {
                         counter_ref.current = 0;
                     }
-                }, 3000);
+                }, 2250);
             return () => clearTimeout(loop.current);
             }
         }, [power_on, props.highlight, nextLoop]);
-
-        function handle_stop_loop(e) {
-            if (power_on) {
-                clearTimeout(loop.current);
-                let pad_index = [...ref.current.children].findIndex(
-                    (pad) => pad.id === e.currentTarget.id
-                );
-                counter_ref.current = pad_index;
-                const pad = ref.current.children[pad_index];
-                const audio = new Audio(pad.firstElementChild.src);
-                audio.volume = parseFloat(props.volume / 10);
-                setTimeout(() => {
-                    props.padHit(pad.id.slice(4).replaceAll("_", " "));
-                    audio.play()
-                }, 400);
-                //Math.random() is used to re-render with a new setTimeout loop
-                setNextLoop(Math.random());
-            }
-        }
 
         //mp3 files are selected based on what sound bank a user chooses
         // const colors = ["cyan", "snow", "magenta", "lightcyan"];
         const colors = ["magenta", "yellow", "orange"];
         const mp3s = props.sound_bank === "A" ? mp3_files[0]: mp3_files[1];
         const pads = mp3s.map((mp3_file, i) => {
-            return <Pad onMouseDown={handle_stop_loop} key={crypto.randomUUID()} id={mp3_file.id} src={mp3_file.src} style={
+            return <Pad key={crypto.randomUUID()} id={mp3_file.id} src={mp3_file.src} style={
                 {
                     background: power_on ? colors[Math.floor(Math.random() * colors.length)] : "rgba(0, 0, 0, 0.1)",
                     boxShadow: power_on ? mp3_file.style.boxShadow : "inset 0 0 7px 0 rgba(0, 0, 0, 0.6)",
