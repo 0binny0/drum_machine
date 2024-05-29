@@ -23,6 +23,8 @@ const Pads = forwardRef(
         const power_on = useContext(PowerContext);
         let loop = useRef(null);
         let counter_ref = useRef(0);
+        //nextLoop is trigger a new loop upon a user mouse event
+        let [nextLoop, setNextLoop] = useState(0);
 
         useEffect(() => {
             // loops through the pads to highlight each pad for 1 second when the drum machine is on
@@ -36,7 +38,7 @@ const Pads = forwardRef(
                 }, 2250);
             return () => clearTimeout(loop.current);
             }
-        }, [power_on, props.highlight]);
+        }, [power_on, props.highlight, nextLoop]);
 
         function handleAudio(e) {
             if (power_on) {
@@ -51,6 +53,7 @@ const Pads = forwardRef(
                 props.padHit(pad.id.slice(4).replaceAll("_", " "));
                 audio.play()
                 //Math.random() is used to re-render with a new setTimeout loop
+                setNextLoop(Math.random());
             }
         }
 
