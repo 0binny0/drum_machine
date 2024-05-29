@@ -4,12 +4,10 @@
 }
 
 body {
-    background: hsl(235, 20%, 25%);
+    background: hsl(235, 20%, 15%);
 }
 
 .drum_machine_wrapper {
-     /*background: hsl(0, 0%, 60%);*/
-    /*background: grey;*/
     background: hsl(235, 20%, 25%);
     padding: 10px;
     margin: 50px auto;
@@ -48,7 +46,6 @@ p:nth-of-type(3) {
 }
 
 .display {
-    /*border: 1px solid black;*/
     height: 113px;
     box-shadow: inset 0px 0px 5px 1px;
 }
@@ -102,15 +99,6 @@ p:nth-of-type(3) {
     border: 1px solid grey;
 }
 
-/*.pad:nth-of-type(4),*/
-/*.pad:nth-of-type(5),*/
-/*.pad:nth-of-type(6),*/
-/*.pad:nth-of-type(7),*/
-/*.pad:nth-of-type(8),*/
-/*.pad:nth-of-type(9) {*/
-/*    margin-top: 0;*/
-/*}*/
-
 .pads_wrapper {
     margin-top: 10px;
     padding: 5px;
@@ -125,7 +113,7 @@ svg {
 
 @media screen and (min-width: 450px) {
     .drum_machine_wrapper {
-        width: 425px;
+        width: 400px;
     }
 
     .pads_wrapper {
