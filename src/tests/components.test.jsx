@@ -64,7 +64,7 @@ describe("", () => {
         expect(mock_setSoundBank).toHaveBeenCalled();
     });
 
-    test("Verify that the volume will be increased by 1 when clicking the increase volume button", async () => {
+    test(" ince volume button", async () => {
         const user = userEvent.setup();
         const {getByRole, getAllByRole} = render(<DrumMachine />);
         await user.click(getByRole("button", {name: "increase_volume"}));
